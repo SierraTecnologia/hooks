@@ -1,19 +1,19 @@
 <?php
 
-namespace Larapack\Hooks\Commands;
+namespace Hooks\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use Larapack\Hooks\Composer;
-use Larapack\Hooks\Events\Setup;
-use Larapack\Hooks\HooksServiceProvider;
+use Hooks\Composer;
+use Hooks\Events\Setup;
+use Hooks\HooksServiceProvider;
 
 class SetupCommand extends Command
 {
     const REPOSITORY_NAME = 'hooks';
 
-    protected $signature = 'hook:setup {--url=https://larapack.io}';
+    protected $signature = 'hook:setup {--url=https://sierratecnologia.io}';
 
     protected $description = 'Prepare Composer for using Hooks.';
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Larapack\Hooks;
+namespace Hooks;
 
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;

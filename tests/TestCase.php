@@ -1,16 +1,16 @@
 <?php
 
-namespace Larapack\Hooks\Tests;
+namespace Hooks\Tests;
 
 use Illuminate\Filesystem\Filesystem;
-use Larapack\Hooks\Composer;
-use Larapack\Hooks\Hooks;
+use Hooks\Composer;
+use Hooks\Hooks;
 
 class TestCase extends \Orchestra\Testbench\TestCase
 {
     protected function getPackageProviders($app)
     {
-        return ['Larapack\Hooks\HooksServiceProvider'];
+        return ['Hooks\HooksServiceProvider'];
     }
 
     /**

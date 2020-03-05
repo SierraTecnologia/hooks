@@ -1,9 +1,9 @@
 <?php
 
-namespace Larapack\Hooks\Commands;
+namespace Hooks\Commands;
 
 use Illuminate\Console\Command;
-use Larapack\Hooks\Hooks;
+use Hooks\Hooks;
 
 class DisableCommand extends Command
 {

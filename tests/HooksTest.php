@@ -1,18 +1,18 @@
 <?php
 
-namespace Larapack\Hooks\Tests;
+namespace Hooks\Tests;
 
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Larapack\Hooks\Composer;
-use Larapack\Hooks\Hook;
-use Larapack\Hooks\Hooks;
+use Hooks\Composer;
+use Hooks\Hook;
+use Hooks\Hooks;
 
 class HooksTest extends TestCase
 {
-    const COMPOSER_REPOSITORY = 'https://testing.larapack.io';
+    const COMPOSER_REPOSITORY = 'https://testing.sierratecnologia.io';
 
     public function setUp(): void
     {
@@ -519,7 +519,7 @@ class HooksTest extends TestCase
         require_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
 
         // Reload service providers
-        app(\Larapack\Hooks\HooksServiceProvider::class, [
+        app(\Hooks\HooksServiceProvider::class, [
             'app' => app(),
         ])->registerHookProviders();
 
@@ -544,7 +544,7 @@ class HooksTest extends TestCase
         require_once base_path('vendor/composer-github-hook/src/TestAlias.php');
 
         // Reload service providers
-        app(\Larapack\Hooks\HooksServiceProvider::class, [
+        app(\Hooks\HooksServiceProvider::class, [
             'app' => app(),
         ])->registerHookProviders();
 
@@ -568,7 +568,7 @@ class HooksTest extends TestCase
         require_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
 
         // Reload service providers
-        app(\Larapack\Hooks\HooksServiceProvider::class, [
+        app(\Hooks\HooksServiceProvider::class, [
             'app' => app(),
         ])->registerHookProviders();
 
@@ -594,7 +594,7 @@ class HooksTest extends TestCase
         require_once base_path('vendor/composer-github-hook/src/TestAlias.php');
 
         // Reload service providers
-        app(\Larapack\Hooks\HooksServiceProvider::class, [
+        app(\Hooks\HooksServiceProvider::class, [
             'app' => app(),
         ])->registerHookProviders();
 

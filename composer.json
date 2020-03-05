@@ -1,12 +1,12 @@
 {
-    "name": "larapack/hooks",
+    "name": "sierratecnologia/hooks",
     "description": "A Laravel Hook system",
     "keywords": ["laravel", "hooks"],
     "license": "MIT",
-    "homepage": "https://larapack.io/",
+    "homepage": "https://sierratecnologia.io/",
     "support": {
-        "issues": "https://github.com/larapack/hooks/issues",
-        "source": "https://github.com/larapack/hooks"
+        "issues": "https://github.com/sierratecnologia/hooks/issues",
+        "source": "https://github.com/sierratecnologia/hooks"
     },
     "authors": [
         {
@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Larapack\\Hooks\\": "src/"
+            "Hooks\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Larapack\\Hooks\\Tests\\": "tests/"
+            "Hooks\\Tests\\": "tests/"
         }
     }
 }

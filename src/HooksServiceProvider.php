@@ -1,6 +1,6 @@
 <?php
 
-namespace Larapack\Hooks;
+namespace Hooks;
 
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\AliasLoader;

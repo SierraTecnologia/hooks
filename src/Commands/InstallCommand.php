@@ -1,15 +1,15 @@
 <?php
 
-namespace Larapack\Hooks\Commands;
+namespace Hooks\Commands;
 
 use Illuminate\Console\Command;
-use Larapack\Hooks\Hooks;
+use Hooks\Hooks;
 
 class InstallCommand extends Command
 {
     protected $signature = 'hook:install {name} {version?} {--enable} {--no-migrate} {--no-seed} {--no-publish}';
 
-    protected $description = 'Download and install a hook from remote https://larapack.io';
+    protected $description = 'Download and install a hook from remote https://sierratecnologia.io';
 
     protected $hooks;
 

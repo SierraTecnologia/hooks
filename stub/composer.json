@@ -2,7 +2,7 @@
     "name": "kebab-case",
     "description": "This is my first hook.",
     "require": {
-        "larapack/hooks": "^1.0.5"
+        "sierratecnologia/hooks": "^1.0.5"
     },
     "autoload": {
         "psr-4": {

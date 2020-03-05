@@ -1,6 +1,6 @@
 <?php
 
-namespace Larapack\Hooks;
+namespace Hooks;
 
 use Illuminate\Database\Migrations\Migrator as BaseMigrator;
 use Illuminate\Support\Arr;

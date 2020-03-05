@@ -1,6 +1,6 @@
 <?php
 
-namespace Larapack\Hooks;
+namespace Hooks;
 
 use Carbon\Carbon;
 use Illuminate\Filesystem\Filesystem;
@@ -11,7 +11,7 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 class Hooks
 {
-    protected static $remote = 'https://larapack.io';
+    protected static $remote = 'https://sierratecnologia.io';
 
     protected $app;
     protected $filesystem;
@@ -195,7 +195,7 @@ class Hooks
      *
      * @param $name
      *
-     * @throws \Larapack\Hooks\Exceptions\HookAlreadyInstalledException
+     * @throws \Hooks\Exceptions\HookAlreadyInstalledException
      */
     public function install($name, $version = null, $migrate = true, $seed = true, $publish = true)
     {
@@ -264,7 +264,7 @@ class Hooks
      * @param $name
      * @param $keep boolean
      *
-     * @throws \Larapack\Hooks\Exceptions\HookNotInstalledException
+     * @throws \Hooks\Exceptions\HookNotInstalledException
      */
     public function uninstall($name, $delete = false, $unmigrate = true, $unseed = true, $unpublish = true)
     {
@@ -326,8 +326,8 @@ class Hooks
      * @param bool        $publish
      * @param bool        $force
      *
-     * @throws \Larapack\Hooks\Exceptions\HookNotFoundException
-     * @throws \Larapack\Hooks\Exceptions\HookNotInstalledException
+     * @throws \Hooks\Exceptions\HookNotFoundException
+     * @throws \Hooks\Exceptions\HookNotInstalledException
      *
      * @return bool
      */
@@ -402,9 +402,9 @@ class Hooks
      *
      * @param $name
      *
-     * @throws \Larapack\Hooks\Exceptions\HookNotFoundException
-     * @throws \Larapack\Hooks\Exceptions\HookNotInstalledException
-     * @throws \Larapack\Hooks\Exceptions\HookAlreadyEnabledException
+     * @throws \Hooks\Exceptions\HookNotFoundException
+     * @throws \Hooks\Exceptions\HookNotInstalledException
+     * @throws \Hooks\Exceptions\HookAlreadyEnabledException
      */
     public function enable($name)
     {
@@ -439,9 +439,9 @@ class Hooks
      *
      * @param $name
      *
-     * @throws \Larapack\Hooks\Exceptions\HookNotFoundException
-     * @throws \Larapack\Hooks\Exceptions\HookNotEnabledException
-     * @throws \Larapack\Hooks\Exceptions\HookNotInstalledException
+     * @throws \Hooks\Exceptions\HookNotFoundException
+     * @throws \Hooks\Exceptions\HookNotEnabledException
+     * @throws \Hooks\Exceptions\HookNotInstalledException
      */
     public function disable($name)
     {
@@ -476,7 +476,7 @@ class Hooks
      *
      * @param $name
      *
-     * @throws \Larapack\Hooks\Exceptions\HookAlreadyExistsException
+     * @throws \Hooks\Exceptions\HookAlreadyExistsException
      */
     public function make($name)
     {
@@ -638,10 +638,10 @@ class Hooks
      *
      * @param $name
      *
-     * @throws \Larapack\Hooks\Exceptions\HookNotFoundException
-     * @throws \Larapack\Hooks\Exceptions\HookNotInstalledException
+     * @throws \Hooks\Exceptions\HookNotFoundException
+     * @throws \Hooks\Exceptions\HookNotInstalledException
      *
-     * @return \Larapack\Hooks\Hook
+     * @return \Hooks\Hook
      */
     public function hook($name)
     {
@@ -905,7 +905,7 @@ class Hooks
     /**
      * Run migrations found for a specific hook.
      *
-     * @param \Larapack\Hooks\Hook $hook
+     * @param \Hooks\Hook $hook
      */
     protected function migrateHook(Hook $hook)
     {
@@ -923,7 +923,7 @@ class Hooks
     /**
      * Rollback migrations found for a specific hook.
      *
-     * @param \Larapack\Hooks\Hook $hook
+     * @param \Hooks\Hook $hook
      */
     protected function unmigrateHook(Hook $hook)
     {
@@ -941,7 +941,7 @@ class Hooks
     /**
      * Run seeders found for a specific hook.
      *
-     * @param \Larapack\Hooks\Hook $hook
+     * @param \Hooks\Hook $hook
      */
     protected function seedHook(Hook $hook)
     {
@@ -954,7 +954,7 @@ class Hooks
     /**
      * Run unseeders found for a specific hook.
      *
-     * @param \Larapack\Hooks\Hook $hook
+     * @param \Hooks\Hook $hook
      */
     protected function unseedHook(Hook $hook)
     {
@@ -967,7 +967,7 @@ class Hooks
     /**
      * Publish assets found for a specific hook.
      *
-     * @param \Larapack\Hooks\Hook $hook
+     * @param \Hooks\Hook $hook
      */
     protected function publishHook(Hook $hook, $force = false)
     {
@@ -1044,7 +1044,7 @@ class Hooks
     /**
      * Unpublish assets found for a specific hook.
      *
-     * @param \Larapack\Hooks\Hook $hook
+     * @param \Hooks\Hook $hook
      */
     protected function unpublishHook(Hook $hook)
     {
@@ -1142,7 +1142,7 @@ class Hooks
     /**
      * Make temponary backup of hook.
      *
-     * @param \Larapack\Hooks\Hook $hook
+     * @param \Hooks\Hook $hook
      *
      * @return void
      */

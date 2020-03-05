@@ -1,8 +1,8 @@
 <?php
 
-namespace Larapack\Hooks\Events;
+namespace Hooks\Events;
 
-use Larapack\Hooks\Hook;
+use Hooks\Hook;
 
 class EnabledHook
 {
@@ -11,7 +11,7 @@ class EnabledHook
     /**
      * Create a new event instance.
      *
-     * @param \Larapack\Hooks\Hook $hook
+     * @param \Hooks\Hook $hook
      */
     public function __construct(Hook $hook)
     {

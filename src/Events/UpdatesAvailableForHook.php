@@ -1,6 +1,6 @@
 <?php
 
-namespace Larapack\Hooks\Events;
+namespace Hooks\Events;
 
 class UpdatesAvailableForHook
 {

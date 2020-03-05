@@ -1,10 +1,10 @@
 <?php
 
-namespace Larapack\Hooks\Commands;
+namespace Hooks\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Larapack\Hooks\Hooks;
+use Hooks\Hooks;
 
 class MakeCommand extends Command
 {
