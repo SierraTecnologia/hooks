@@ -30,5 +30,16 @@
         "psr-4": {
             "Hooks\\Tests\\": "tests/"
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../**",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
