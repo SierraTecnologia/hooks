@@ -27,11 +27,15 @@ class ListCommand extends Command
 
     public function handle()
     {
-        $this->table(['Name', 'Status'], $this->hooks->hooks()->transform(function ($hook) {
-            return [
-                'name'    => $hook['name'],
-                'enabled' => $hook['enabled'] ? 'Enabled' : 'Disabled',
-            ];
-        }));
+        $this->table(
+            ['Name', 'Status'], $this->hooks->hooks()->transform(
+                function ($hook) {
+                    return [
+                    'name'    => $hook['name'],
+                    'enabled' => $hook['enabled'] ? 'Enabled' : 'Disabled',
+                    ];
+                }
+            )
+        );
     }
 }

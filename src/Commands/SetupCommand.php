@@ -35,10 +35,12 @@ class SetupCommand extends Command
     {
         $composer = new Composer(base_path('composer.json'));
 
-        $composer->addRepository(static::REPOSITORY_NAME, [
+        $composer->addRepository(
+            static::REPOSITORY_NAME, [
             'type' => 'composer',
             'url'  => $this->option('url'),
-        ]);
+            ]
+        );
 
         if (Str::startsWith($this->option('url'), 'http://')) {
             $composer->addConfig('secure-http', false);

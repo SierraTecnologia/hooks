@@ -30,12 +30,14 @@ class HooksTest extends TestCase
         $composer = new Composer();
 
         $this->assertTrue($composer->has('repositories'));
-        $this->assertEquals([
+        $this->assertEquals(
+            [
             'hooks' => [
                 'url'  => static::COMPOSER_REPOSITORY,
                 'type' => 'composer',
             ],
-        ], $composer->get('repositories'));
+            ], $composer->get('repositories')
+        );
     }
 
     public function test_install_hook_from_github()
@@ -43,9 +45,11 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'composer-github-hook',
-        ]);
+            ]
+        );
 
         // Check that hooks folder does exists
         $this->assertDirectoryExists(base_path('hooks'));
@@ -71,10 +75,12 @@ class HooksTest extends TestCase
     public function test_install_hook_from_github_with_enable_option()
     {
         // Install hook and enable hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'     => 'composer-github-hook',
             '--enable' => true,
-        ]);
+            ]
+        );
 
         // Check that hook is enabled
         $hook = app('hooks')->hook('composer-github-hook');
@@ -89,9 +95,11 @@ class HooksTest extends TestCase
         $migrationDateTime = $carbon->format('Y_m_d_His');
 
         // Make hook
-        $this->artisan('hook:make', [
+        $this->artisan(
+            'hook:make', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that hooks folder does exists
         $this->assertDirectoryExists(base_path('hooks'));
@@ -133,25 +141,31 @@ class HooksTest extends TestCase
             $filesystem->get(base_path('hooks/local-test-hook/resources/assets/scripts/alert.js'))
         );
 
-        $this->assertFileExists(base_path(
-            'hooks/local-test-hook/resources/database/migrations/'.$migrationDateTime.'_create_local_test_hook_table.php'
-        ));
+        $this->assertFileExists(
+            base_path(
+                'hooks/local-test-hook/resources/database/migrations/'.$migrationDateTime.'_create_local_test_hook_table.php'
+            )
+        );
         $this->assertEquals(
             $filesystem->get(__DIR__.'/fixtures/resources/database/migrations/'.$migrationDateTime.'_create_local_test_hook_table.php'),
             $filesystem->get(base_path('hooks/local-test-hook/resources/database/migrations/'.$migrationDateTime.'_create_local_test_hook_table.php'))
         );
 
-        $this->assertFileExists(base_path(
-            'hooks/local-test-hook/resources/database/seeders/LocalTestHookTableSeeder.php'
-        ));
+        $this->assertFileExists(
+            base_path(
+                'hooks/local-test-hook/resources/database/seeders/LocalTestHookTableSeeder.php'
+            )
+        );
         $this->assertEquals(
             $filesystem->get(__DIR__.'/fixtures/resources/database/seeders/LocalTestHookTableSeeder.php'),
             $filesystem->get(base_path('hooks/local-test-hook/resources/database/seeders/LocalTestHookTableSeeder.php'))
         );
 
-        $this->assertFileExists(base_path(
-            'hooks/local-test-hook/resources/database/unseeders/LocalTestHookTableUnseeder.php'
-        ));
+        $this->assertFileExists(
+            base_path(
+                'hooks/local-test-hook/resources/database/unseeders/LocalTestHookTableUnseeder.php'
+            )
+        );
         $this->assertEquals(
             $filesystem->get(__DIR__.'/fixtures/resources/database/unseeders/LocalTestHookTableUnseeder.php'),
             $filesystem->get(base_path('hooks/local-test-hook/resources/database/unseeders/LocalTestHookTableUnseeder.php'))
@@ -161,14 +175,18 @@ class HooksTest extends TestCase
     public function test_installing_local_hook()
     {
         // Make hook
-        $this->artisan('hook:make', [
+        $this->artisan(
+            'hook:make', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook details is correct
         $hook = app('hooks')->hook('local-test-hook');
@@ -190,9 +208,11 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Make hook
-        $this->artisan('hook:make', [
+        $this->artisan(
+            'hook:make', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that hooks folder does exists
         $this->assertDirectoryExists(base_path('hooks'));
@@ -205,9 +225,11 @@ class HooksTest extends TestCase
         $this->assertCount(0, $hooks);
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook details is correct
         $hook = app('hooks')->hook('local-test-hook');
@@ -224,9 +246,11 @@ class HooksTest extends TestCase
         $this->assertTrue($hook->isLocal());
 
         // Enable hook
-        $this->artisan('hook:enable', [
+        $this->artisan(
+            'hook:enable', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook details is correct
         $hook = app('hooks')->hook('local-test-hook');
@@ -248,9 +272,11 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Make hook
-        $this->artisan('hook:make', [
+        $this->artisan(
+            'hook:make', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that hooks folder does exists
         $this->assertDirectoryExists(base_path('hooks'));
@@ -263,9 +289,11 @@ class HooksTest extends TestCase
         $this->assertCount(0, $hooks);
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook details is correct
         $hook = app('hooks')->hook('local-test-hook');
@@ -282,9 +310,11 @@ class HooksTest extends TestCase
         $this->assertTrue($hook->isLocal());
 
         // Enable hook
-        $this->artisan('hook:enable', [
+        $this->artisan(
+            'hook:enable', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook details is correct
         $hook = app('hooks')->hook('local-test-hook');
@@ -301,9 +331,11 @@ class HooksTest extends TestCase
         $this->assertTrue($hook->isLocal());
 
         // Disable hook
-        $this->artisan('hook:disable', [
+        $this->artisan(
+            'hook:disable', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook details is correct
         $hook = app('hooks')->hook('local-test-hook');
@@ -325,9 +357,11 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Make hook
-        $this->artisan('hook:make', [
+        $this->artisan(
+            'hook:make', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that hooks folder does exists
         $this->assertDirectoryExists(base_path('hooks'));
@@ -340,9 +374,11 @@ class HooksTest extends TestCase
         $this->assertCount(0, $hooks);
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook details is correct
         $hook = app('hooks')->hook('local-test-hook');
@@ -359,10 +395,12 @@ class HooksTest extends TestCase
         $this->assertTrue($hook->isLocal());
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name'     => 'local-test-hook',
             '--delete' => true,
-        ]);
+            ]
+        );
 
         // Check that the hook folder exists
         $this->assertDirectoryNotExists(base_path('hooks/local-test-hook'));
@@ -373,9 +411,11 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Make hook
-        $this->artisan('hook:make', [
+        $this->artisan(
+            'hook:make', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that hooks folder does exists
         $this->assertDirectoryExists(base_path('hooks'));
@@ -388,9 +428,11 @@ class HooksTest extends TestCase
         $this->assertCount(0, $hooks);
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook details is correct
         $hook = app('hooks')->hook('local-test-hook');
@@ -407,9 +449,11 @@ class HooksTest extends TestCase
         $this->assertTrue($hook->isLocal());
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name' => 'local-test-hook',
-        ]);
+            ]
+        );
 
         // Check that the hook folder exists
         $this->assertDirectoryExists(base_path('hooks/local-test-hook'));
@@ -420,10 +464,12 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'composer-github-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         // Check that the hook folder exists
         $this->assertDirectoryExists(base_path('vendor/composer-github-hook'));
@@ -451,17 +497,21 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'composer-github-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         Hooks::useVersionWildcardOnUpdate();
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name' => 'composer-github-hook',
-        ]);
+            ]
+        );
 
         // Check version is correct
         $hook = app('hooks')->hook('composer-github-hook');
@@ -471,16 +521,20 @@ class HooksTest extends TestCase
     public function test_updating_to_specific_version()
     {
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'composer-github-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'    => 'composer-github-hook',
             'version' => 'v1.0.1',
-        ]);
+            ]
+        );
 
         // Check version is correct
         $hook = app('hooks')->hook('composer-github-hook');
@@ -490,16 +544,20 @@ class HooksTest extends TestCase
     public function test_checking_hooks_for_updates()
     {
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'composer-github-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->artisan('hook:check');
 
-        $hooks = app('hooks')->hooks()->filter(function (Hook $hook) {
-            return $hook->outdated();
-        });
+        $hooks = app('hooks')->hooks()->filter(
+            function (Hook $hook) {
+                return $hook->outdated();
+            }
+        );
 
         $this->assertCount(1, $hooks);
     }
@@ -507,21 +565,25 @@ class HooksTest extends TestCase
     public function test_provider_is_not_loaded_when_diabled()
     {
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'composer-github-hook',
-        ]);
+            ]
+        );
 
         // Check that enabled
         $hook = app('hooks')->hook('composer-github-hook');
         $this->assertFalse($hook->enabled);
 
         // Require files
-        require_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
+        include_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
 
         // Reload service providers
-        app(\Hooks\HooksServiceProvider::class, [
+        app(
+            \Hooks\HooksServiceProvider::class, [
             'app' => app(),
-        ])->registerHookProviders();
+            ]
+        )->registerHookProviders();
 
         // Check if service provider has run
         $this->assertFalse(\ComposerGithubHook\ComposerGithubHookServiceProvider::$isBooted);
@@ -531,22 +593,26 @@ class HooksTest extends TestCase
     public function test_alias_is_not_loaded_when_disabled()
     {
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'composer-github-hook',
-        ]);
+            ]
+        );
 
         // Check that enabled
         $hook = app('hooks')->hook('composer-github-hook');
         $this->assertFalse($hook->enabled);
 
         // Require files
-        require_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
-        require_once base_path('vendor/composer-github-hook/src/TestAlias.php');
+        include_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
+        include_once base_path('vendor/composer-github-hook/src/TestAlias.php');
 
         // Reload service providers
-        app(\Hooks\HooksServiceProvider::class, [
+        app(
+            \Hooks\HooksServiceProvider::class, [
             'app' => app(),
-        ])->registerHookProviders();
+            ]
+        )->registerHookProviders();
 
         // Test if alias exists
         $this->assertFalse(class_exists(\Test::class));
@@ -555,22 +621,26 @@ class HooksTest extends TestCase
     public function test_provider_is_loaded_when_enabled()
     {
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'     => 'composer-github-hook',
             '--enable' => true,
-        ]);
+            ]
+        );
 
         // Check that enabled
         $hook = app('hooks')->hook('composer-github-hook');
         $this->assertTrue($hook->enabled);
 
         // Require files
-        require_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
+        include_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
 
         // Reload service providers
-        app(\Hooks\HooksServiceProvider::class, [
+        app(
+            \Hooks\HooksServiceProvider::class, [
             'app' => app(),
-        ])->registerHookProviders();
+            ]
+        )->registerHookProviders();
 
         // Check if service provider has run
         $this->assertTrue(\ComposerGithubHook\ComposerGithubHookServiceProvider::$isBooted);
@@ -580,23 +650,27 @@ class HooksTest extends TestCase
     public function test_alias_is_loaded_when_enabled()
     {
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'     => 'composer-github-hook',
             '--enable' => true,
-        ]);
+            ]
+        );
 
         // Check that enabled
         $hook = app('hooks')->hook('composer-github-hook');
         $this->assertTrue($hook->enabled);
 
         // Require files
-        require_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
-        require_once base_path('vendor/composer-github-hook/src/TestAlias.php');
+        include_once base_path('vendor/composer-github-hook/src/ComposerGithubHookServiceProvider.php');
+        include_once base_path('vendor/composer-github-hook/src/TestAlias.php');
 
         // Reload service providers
-        app(\Hooks\HooksServiceProvider::class, [
+        app(
+            \Hooks\HooksServiceProvider::class, [
             'app' => app(),
-        ])->registerHookProviders();
+            ]
+        )->registerHookProviders();
 
         // Test if alias exists and works
         $this->assertTrue(class_exists(\Test::class));
@@ -611,9 +685,11 @@ class HooksTest extends TestCase
         $this->assertDirectoryNotExists(base_path('vendor/marktopper/composer-hook-dependency-1'));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name' => 'composer-github-hook',
-        ]);
+            ]
+        );
 
         // Make sure dependency is now downloaded
         $this->assertDirectoryExists(base_path('vendor/marktopper/composer-hook-dependency-1'));
@@ -628,10 +704,12 @@ class HooksTest extends TestCase
         $this->assertDirectoryNotExists(base_path('vendor/marktopper/composer-hook-dependency-2'));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'composer-github-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         // Make sure dependency is now downloaded
         $this->assertDirectoryExists(base_path('vendor/marktopper/composer-hook-dependency-1'));
@@ -640,9 +718,11 @@ class HooksTest extends TestCase
         Hooks::useVersionWildcardOnUpdate();
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name' => 'composer-github-hook',
-        ]);
+            ]
+        );
 
         // Make sure dependency is now downloaded
         $this->assertDirectoryExists(base_path('vendor/marktopper/composer-hook-dependency-1'));
@@ -657,10 +737,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_19_000000_create_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_19_000000_create_tests_table');
@@ -674,12 +756,14 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_19_000000_create_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'                => 'migrating-hook',
             'version'             => 'v1.0.0',
             '--no-migrate'        => true,
             '--no-seed'           => true,
-        ]);
+            ]
+        );
 
         $this->assertFalse(Schema::hasTable('tests'));
         $this->assertMigrationHasNotRan('2018_01_19_000000_create_tests_table');
@@ -693,18 +777,22 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_19_000000_create_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_19_000000_create_tests_table');
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name'    => 'migrating-hook',
-        ]);
+            ]
+        );
 
         $this->assertFalse(Schema::hasTable('tests'));
         $this->assertMigrationHasNotRan('2018_01_19_000000_create_tests_table');
@@ -718,19 +806,23 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_19_000000_create_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_19_000000_create_tests_table');
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name'                  => 'migrating-hook',
             '--no-unmigrate'        => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_19_000000_create_tests_table');
@@ -747,10 +839,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_19_100000_create_another_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_19_000000_create_tests_table');
@@ -759,10 +853,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_19_100000_create_another_tests_table');
 
         // Install hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'    => 'migrating-hook',
             'version' => 'v2.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_19_000000_create_tests_table');
@@ -780,10 +876,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_19_100000_create_another_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_19_000000_create_tests_table');
@@ -792,12 +890,14 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_19_100000_create_another_tests_table');
 
         // Install hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'                => 'migrating-hook',
             'version'             => 'v2.0.0',
             '--no-migrate'        => true,
             '--no-seed'           => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_19_000000_create_tests_table');
@@ -812,10 +912,12 @@ class HooksTest extends TestCase
         $this->assertFalse(Schema::hasTable('tests'));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(3, DB::table('tests')->count());
@@ -828,11 +930,13 @@ class HooksTest extends TestCase
         $this->assertFalse(Schema::hasTable('tests'));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'              => 'migrating-hook',
             'version'           => 'v1.0.0',
             '--no-seed'         => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(0, DB::table('tests')->count());
@@ -845,19 +949,23 @@ class HooksTest extends TestCase
         $this->assertFalse(Schema::hasTable('tests'));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(3, DB::table('tests')->count());
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name'                  => 'migrating-hook',
             '--no-unmigrate'        => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(0, DB::table('tests')->count());
@@ -870,20 +978,24 @@ class HooksTest extends TestCase
         $this->assertFalse(Schema::hasTable('tests'));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(3, DB::table('tests')->count());
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name'                  => 'migrating-hook',
             '--no-unmigrate'        => true,
             '--no-unseed'           => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(3, DB::table('tests')->count());
@@ -896,19 +1008,23 @@ class HooksTest extends TestCase
         $this->assertFalse(Schema::hasTable('tests'));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(3, DB::table('tests')->count());
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'    => 'migrating-hook',
             'version' => 'v2.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(3, DB::table('tests')->count());
@@ -923,20 +1039,24 @@ class HooksTest extends TestCase
         $this->assertFalse(Schema::hasTable('tests'));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(3, DB::table('tests')->count());
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'              => 'migrating-hook',
             'version'           => 'v2.0.0',
             '--no-seed'         => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertEquals(3, DB::table('tests')->count());
@@ -951,16 +1071,20 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
     }
 
     public function test_installing_without_publishing_assets()
@@ -970,11 +1094,13 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'                 => 'migrating-hook',
             'version'              => 'v1.0.0',
             '--no-publish'         => true,
-        ]);
+            ]
+        );
 
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
     }
@@ -986,21 +1112,27 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name' => 'migrating-hook',
-        ]);
+            ]
+        );
 
         $this->assertFalse($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
     }
@@ -1012,16 +1144,20 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
 
         $filesystem->put(
             base_path('public/vendor/migration-hook/assets/test.js'),
@@ -1029,15 +1165,19 @@ class HooksTest extends TestCase
         );
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name' => 'migrating-hook',
-        ]);
+            ]
+        );
 
         $this->assertFalse($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/test.js')));
-        $this->assertEquals("alert('This is just a test!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/test.js')
-        ));
+        $this->assertEquals(
+            "alert('This is just a test!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/test.js')
+            )
+        );
     }
 
     public function test_uninstalling_without_unpublishing_assets()
@@ -1047,28 +1187,36 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name'                   => 'migrating-hook',
             '--no-unpublish'         => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
     }
 
     public function test_republishing_assets_on_update()
@@ -1078,31 +1226,41 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'    => 'migrating-hook',
             'version' => 'v2.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/another.js')));
-        $this->assertEquals("alert('I am still alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
-        $this->assertEquals("alert('I am another file!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/another.js')
-        ));
+        $this->assertEquals(
+            "alert('I am still alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
+        $this->assertEquals(
+            "alert('I am another file!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/another.js')
+            )
+        );
     }
 
     public function test_updating_without_republishing_assets()
@@ -1112,29 +1270,37 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'                 => 'migrating-hook',
             'version'              => 'v2.0.0',
             '--no-publish'         => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
         $this->assertFalse($filesystem->exists(base_path('public/vendor/migration-hook/assets/another.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
     }
 
     public function test_republishing_assets_on_update_with_custom_changed_files()
@@ -1144,16 +1310,20 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
 
         $filesystem->put(
             base_path('public/vendor/migration-hook/assets/script.js'),
@@ -1161,19 +1331,25 @@ class HooksTest extends TestCase
         );
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'    => 'migrating-hook',
             'version' => 'v2.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/another.js')));
-        $this->assertEquals("alert('Am I still alive?');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
-        $this->assertEquals("alert('I am another file!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/another.js')
-        ));
+        $this->assertEquals(
+            "alert('Am I still alive?');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
+        $this->assertEquals(
+            "alert('I am another file!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/another.js')
+            )
+        );
     }
 
     public function test_force_republishing_assets_on_update_with_custom_changed_files()
@@ -1183,16 +1359,20 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
-        $this->assertEquals("alert('I am alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
+        $this->assertEquals(
+            "alert('I am alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
 
         $filesystem->put(
             base_path('public/vendor/migration-hook/assets/script.js'),
@@ -1200,20 +1380,26 @@ class HooksTest extends TestCase
         );
 
         // Update hook
-        $this->artisan('hook:update', [
+        $this->artisan(
+            'hook:update', [
             'name'            => 'migrating-hook',
             'version'         => 'v2.0.0',
             '--force'         => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/script.js')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/migration-hook/assets/another.js')));
-        $this->assertEquals("alert('I am still alive!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/script.js')
-        ));
-        $this->assertEquals("alert('I am another file!');\n", $filesystem->get(
-            base_path('public/vendor/migration-hook/assets/another.js')
-        ));
+        $this->assertEquals(
+            "alert('I am still alive!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/script.js')
+            )
+        );
+        $this->assertEquals(
+            "alert('I am another file!');\n", $filesystem->get(
+                base_path('public/vendor/migration-hook/assets/another.js')
+            )
+        );
     }
 
     public function test_hook_migrating_single_file()
@@ -1224,10 +1410,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_21_000000_create_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'single-migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_21_000000_create_tests_table');
@@ -1243,10 +1431,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_21_000000_create_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'single-migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_21_000000_create_tests_table');
@@ -1254,9 +1444,11 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_21_000000_create_another_tests_table');
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name'    => 'single-migrating-hook',
-        ]);
+            ]
+        );
 
         $this->assertFalse(Schema::hasTable('tests'));
         $this->assertMigrationHasNOtRan('2018_01_21_000000_create_tests_table');
@@ -1272,10 +1464,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_21_000000_create_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'single-migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_21_000000_create_tests_table');
@@ -1292,10 +1486,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_21_000000_create_tests_table');
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'single-migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_21_000000_create_tests_table');
@@ -1304,10 +1500,12 @@ class HooksTest extends TestCase
         $this->assertMigrationHasNotRan('2018_01_21_000000_create_another_tests_table');
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name'           => 'single-migrating-hook',
             '--no-unmigrate' => true,
-        ]);
+            ]
+        );
 
         $this->assertTrue(Schema::hasTable('tests'));
         $this->assertMigrationHasRan('2018_01_21_000000_create_tests_table');
@@ -1323,16 +1521,20 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'single-migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/single-migrating-hook/assets/scripts')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/single-migrating-hook/assets/scripts/alert.js')));
-        $this->assertEquals("alert('Test!');\n", $filesystem->get(
-            base_path('public/vendor/single-migrating-hook/assets/scripts/alert.js')
-        ));
+        $this->assertEquals(
+            "alert('Test!');\n", $filesystem->get(
+                base_path('public/vendor/single-migrating-hook/assets/scripts/alert.js')
+            )
+        );
 
         $this->assertFalse($filesystem->exists(base_path('public/vendor/single-migrating-hook/assets/scripts/another-test.js')));
     }
@@ -1344,25 +1546,31 @@ class HooksTest extends TestCase
         $this->assertFalse($filesystem->exists(base_path('public/vendor')));
 
         // Install hook
-        $this->artisan('hook:install', [
+        $this->artisan(
+            'hook:install', [
             'name'    => 'single-migrating-hook',
             'version' => 'v1.0.0',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/single-migrating-hook/assets/scripts')));
         $this->assertTrue($filesystem->exists(base_path('public/vendor/single-migrating-hook/assets/scripts/alert.js')));
-        $this->assertEquals("alert('Test!');\n", $filesystem->get(
-            base_path('public/vendor/single-migrating-hook/assets/scripts/alert.js')
-        ));
+        $this->assertEquals(
+            "alert('Test!');\n", $filesystem->get(
+                base_path('public/vendor/single-migrating-hook/assets/scripts/alert.js')
+            )
+        );
 
         $this->assertFalse($filesystem->exists(base_path('public/vendor/single-migrating-hook/assets/scripts/another-test.js')));
 
         $filesystem->put(base_path('public/vendor/single-migrating-hook/assets/scripts/another-test.js'), "alert('Another test!');\n");
 
         // Uninstall hook
-        $this->artisan('hook:uninstall', [
+        $this->artisan(
+            'hook:uninstall', [
             'name' => 'single-migrating-hook',
-        ]);
+            ]
+        );
 
         $this->assertTrue($filesystem->exists(base_path('public/vendor/single-migrating-hook/assets/scripts')));
         $this->assertFalse($filesystem->exists(base_path('public/vendor/single-migrating-hook/assets/scripts/alert.js')));

@@ -13,13 +13,15 @@ class CreateStudlyCaseTable extends Migration
      */
     public function up()
     {
-        Schema::create('snake_case', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create(
+            'snake_case', function (Blueprint $table) {
+                $table->increments('id');
 
-            $table->string('name');
+                $table->string('name');
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            }
+        );
     }
 
     /**

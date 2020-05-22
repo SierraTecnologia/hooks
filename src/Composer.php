@@ -80,9 +80,11 @@ class Composer
 
     protected function read()
     {
-        $this->items = new Repository($this->decode(
-            $this->filesystem->get($this->location)
-        ));
+        $this->items = new Repository(
+            $this->decode(
+                $this->filesystem->get($this->location)
+            )
+        );
 
         $this->changed = false;
     }

@@ -17,10 +17,12 @@ class LocalTestHookTableSeeder extends Seeder
             return;
         }
 
-        DB::table('local_test_hook')->insert([
+        DB::table('local_test_hook')->insert(
+            [
             ['name' => 'foo'],
             ['name' => 'bar'],
             ['name' => 'baz'],
-        ]);
+            ]
+        );
     }
 }

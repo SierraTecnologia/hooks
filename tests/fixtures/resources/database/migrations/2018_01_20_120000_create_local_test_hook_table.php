@@ -13,13 +13,15 @@ class CreateLocalTestHookTable extends Migration
      */
     public function up()
     {
-        Schema::create('local_test_hook', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create(
+            'local_test_hook', function (Blueprint $table) {
+                $table->increments('id');
 
-            $table->string('name');
+                $table->string('name');
 
-            $table->timestamps();
-        });
+                $table->timestamps();
+            }
+        );
     }
 
     /**

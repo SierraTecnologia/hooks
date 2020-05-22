@@ -96,14 +96,14 @@ class Hooks
         $value = (int) $value;
 
         switch ($unit) {
-            case 'g':
-                $value *= 1024;
-                // no break (cumulative multiplier)
-            case 'm':
-                $value *= 1024;
-                // no break (cumulative multiplier)
-            case 'k':
-                $value *= 1024;
+        case 'g':
+            $value *= 1024;
+            // no break (cumulative multiplier)
+        case 'm':
+            $value *= 1024;
+            // no break (cumulative multiplier)
+        case 'k':
+            $value *= 1024;
         }
 
         return $value;
@@ -250,10 +250,12 @@ class Hooks
 
     public function prepareLocalInstallation($name)
     {
-        $this->composerJson->addRepository($name, [
+        $this->composerJson->addRepository(
+            $name, [
             'type' => 'path',
             'url'  => "hooks/{$name}",
-        ]);
+            ]
+        );
 
         $this->composerJson->save();
     }
@@ -299,10 +301,12 @@ class Hooks
             $this->unpublishHook($hook);
         }
 
-        $this->runComposer([
+        $this->runComposer(
+            [
             'command'  => 'remove',
             'packages' => [$name],
-        ]);
+            ]
+        );
 
         $hooks = $this->hooks()->where('name', '!=', $name);
         $this->hooks = $hooks;
@@ -754,8 +758,9 @@ class Hooks
 
         if (isset($data['hooks'])) {
             foreach ($data['hooks'] as $key => $hook) {
-                if (!$this->filesystem->exists(base_path("hooks/{$key}/composer.json")) &&
-                    !$this->filesystem->exists(base_path("vendor/{$key}/composer.json"))) {
+                if (!$this->filesystem->exists(base_path("hooks/{$key}/composer.json")) 
+                    && !$this->filesystem->exists(base_path("vendor/{$key}/composer.json"))
+                ) {
                     continue; // This hook does not seem to exist anymore
                 }
 
@@ -839,27 +844,35 @@ class Hooks
      */
     public function remakeJson()
     {
-        $json = json_encode([
+        $json = json_encode(
+            [
             'last_remote_check' => (!is_null($this->lastRemoteCheck) ? $this->lastRemoteCheck->timestamp : null),
             'hooks'             => $this->hooks(),
-        ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+            ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+        );
 
         file_put_contents(base_path('hooks/hooks.json'), $json);
     }
 
     public function composerRequire(array $packages)
     {
-        return $this->runComposer([
+        return $this->runComposer(
+            [
             'command'  => 'require',
             'packages' => $packages,
-        ]);
+            ]
+        );
     }
 
     public function runComposer($input)
     {
-        $input = new ArrayInput(array_merge([
-            '--working-dir' => base_path('/'),
-        ], $input));
+        $input = new ArrayInput(
+            array_merge(
+                [
+                '--working-dir' => base_path('/'),
+                ], $input
+            )
+        );
 
         $this->composer->run($input, $output = new RawOutput());
 
@@ -872,10 +885,12 @@ class Hooks
 
     public function checkForUpdates()
     {
-        $output = $this->runComposer([
+        $output = $this->runComposer(
+            [
             'command'  => 'outdated',
             '--format' => 'json',
-        ]);
+            ]
+        );
 
         $outdated = [];
         $hooks = [];
@@ -982,62 +997,74 @@ class Hooks
             }
 
             if ($filesystem->isDirectory($realLocation)) {
-                $allFiles = collect($filesystem->allFiles($realLocation))->map(function ($file) use ($realLocation) {
-                    return substr($file->getRealPath(), strlen($realLocation) + 1);
-                });
+                $allFiles = collect($filesystem->allFiles($realLocation))->map(
+                    function ($file) use ($realLocation) {
+                        return substr($file->getRealPath(), strlen($realLocation) + 1);
+                    }
+                );
             } else {
-                $allFiles = collect([new \Symfony\Component\Finder\SplFileInfo(
-                    $realLocation,
-                    '',
-                    basename($realLocation)
-                )]);
+                $allFiles = collect(
+                    [new \Symfony\Component\Finder\SplFileInfo(
+                        $realLocation,
+                        '',
+                        basename($realLocation)
+                    )]
+                );
             }
 
-            $newFiles = $allFiles->filter(function ($filename) use ($publishPath, $filesystem) {
-                return !$filesystem->exists($publishPath.'/'.$filename);
-            });
+            $newFiles = $allFiles->filter(
+                function ($filename) use ($publishPath, $filesystem) {
+                    return !$filesystem->exists($publishPath.'/'.$filename);
+                }
+            );
 
-            $updatedFiles = $allFiles->filter(function ($filename) use ($publishPath, $filesystem) {
-                return $filesystem->exists($publishPath.'/'.$filename);
-            });
+            $updatedFiles = $allFiles->filter(
+                function ($filename) use ($publishPath, $filesystem) {
+                    return $filesystem->exists($publishPath.'/'.$filename);
+                }
+            );
 
             if (!$force && isset($this->tempDirectories[$hook->name])) {
                 $tempLocation = $this->tempDirectories[$hook->name].'/'.$location;
                 $updatedFiles = $updatedFiles
-                    ->filter(function ($filename) use ($tempLocation, $publishPath, $filesystem) {
-                        if (!$filesystem->exists($tempLocation.'/'.$filename)) {
-                            return true;
-                        }
+                    ->filter(
+                        function ($filename) use ($tempLocation, $publishPath, $filesystem) {
+                            if (!$filesystem->exists($tempLocation.'/'.$filename)) {
+                                return true;
+                            }
 
-                        return md5_file($tempLocation.'/'.$filename) ==
+                            return md5_file($tempLocation.'/'.$filename) ==
                                md5_file($publishPath.'/'.$filename);
-                    });
+                        }
+                    );
             }
 
             $newFiles->merge($updatedFiles)
-                ->each(function ($filename) use ($realLocation, $publishPath, $filesystem) {
-                    if (!$filesystem->isDirectory($realLocation)) {
-                        $directory = substr($publishPath, 0, -strlen(basename($publishPath)));
+                ->each(
+                    function ($filename) use ($realLocation, $publishPath, $filesystem) {
+                        if (!$filesystem->isDirectory($realLocation)) {
+                            $directory = substr($publishPath, 0, -strlen(basename($publishPath)));
+
+                            if (!$filesystem->isDirectory($directory)) {
+                                $filesystem->makeDirectory($directory, 0755, true, true);
+                            }
+
+                            return $filesystem->copy($realLocation, $publishPath);
+                        }
+
+                        $directory = substr($publishPath.'/'.$filename, 0, -strlen(basename($filename)));
 
                         if (!$filesystem->isDirectory($directory)) {
                             $filesystem->makeDirectory($directory, 0755, true, true);
                         }
 
-                        return $filesystem->copy($realLocation, $publishPath);
+                        $filesystem->delete($publishPath.'/'.$filename);
+                        $filesystem->copy(
+                            $realLocation.'/'.$filename,
+                            $publishPath.'/'.$filename
+                        );
                     }
-
-                    $directory = substr($publishPath.'/'.$filename, 0, -strlen(basename($filename)));
-
-                    if (!$filesystem->isDirectory($directory)) {
-                        $filesystem->makeDirectory($directory, 0755, true, true);
-                    }
-
-                    $filesystem->delete($publishPath.'/'.$filename);
-                    $filesystem->copy(
-                        $realLocation.'/'.$filename,
-                        $publishPath.'/'.$filename
-                    );
-                });
+                );
         }
     }
 
@@ -1060,32 +1087,40 @@ class Hooks
 
             if ($filesystem->isDirectory($realLocation)) {
                 $allFiles = collect($this->filesystem->allFiles($realLocation))
-                    ->map(function ($file) use ($realLocation) {
-                        return substr($file->getRealPath(), strlen($realLocation) + 1);
-                    });
+                    ->map(
+                        function ($file) use ($realLocation) {
+                            return substr($file->getRealPath(), strlen($realLocation) + 1);
+                        }
+                    );
             } else {
-                $allFiles = collect([new \Symfony\Component\Finder\SplFileInfo(
-                    $realLocation,
-                    '',
-                    basename($realLocation)
-                )]);
+                $allFiles = collect(
+                    [new \Symfony\Component\Finder\SplFileInfo(
+                        $realLocation,
+                        '',
+                        basename($realLocation)
+                    )]
+                );
             }
 
-            $existingFiles = $allFiles->filter(function ($filename) use ($publishPath, $filesystem) {
-                if ($filesystem->isDirectory($publishPath)) {
-                    return $filesystem->exists($publishPath.'/'.$filename);
+            $existingFiles = $allFiles->filter(
+                function ($filename) use ($publishPath, $filesystem) {
+                    if ($filesystem->isDirectory($publishPath)) {
+                        return $filesystem->exists($publishPath.'/'.$filename);
+                    }
+
+                    return $filesystem->exists($publishPath);
                 }
+            );
 
-                return $filesystem->exists($publishPath);
-            });
+            $existingFiles->each(
+                function ($filename) use ($publishPath, $filesystem) {
+                    if ($filesystem->isDirectory($publishPath)) {
+                        return $filesystem->delete($publishPath.'/'.$filename);
+                    }
 
-            $existingFiles->each(function ($filename) use ($publishPath, $filesystem) {
-                if ($filesystem->isDirectory($publishPath)) {
-                    return $filesystem->delete($publishPath.'/'.$filename);
+                    $filesystem->delete($publishPath);
                 }
-
-                $filesystem->delete($publishPath);
-            });
+            );
         }
     }
 
@@ -1100,26 +1135,32 @@ class Hooks
         $filesystem = $this->filesystem;
 
         $this->realPath($folders, $basePath)
-            ->each(function ($folder) use ($filesystem) {
-                if ($filesystem->isDirectory($folder)) {
-                    $files = $filesystem->files($folder);
-                } else {
-                    $files = [new \Symfony\Component\Finder\SplFileInfo(
-                        $folder,
-                        '',
-                        basename($folder)
-                    )];
+            ->each(
+                function ($folder) use ($filesystem) {
+                    if ($filesystem->isDirectory($folder)) {
+                        $files = $filesystem->files($folder);
+                    } else {
+                        $files = [new \Symfony\Component\Finder\SplFileInfo(
+                            $folder,
+                            '',
+                            basename($folder)
+                        )];
+                    }
+
+                    collect($files)->filter(
+                        function ($file) {
+                            return $file->getExtension() == 'php';
+                        }
+                    )->each(
+                        function ($file) {
+                            $class = substr($file->getFilename(), 0, -4);
+                            include_once $file->getRealPath();
+
+                            (new $class())->run();
+                        }
+                    );
                 }
-
-                collect($files)->filter(function ($file) {
-                    return $file->getExtension() == 'php';
-                })->each(function ($file) {
-                    $class = substr($file->getFilename(), 0, -4);
-                    require_once $file->getRealPath();
-
-                    (new $class())->run();
-                });
-            });
+            );
     }
 
     /**
@@ -1132,11 +1173,15 @@ class Hooks
      */
     protected function realPath(array $paths, $basePath = '')
     {
-        return collect($paths)->map(function ($path) use ($basePath) {
-            return realpath($basePath.$path);
-        })->filter(function ($path) {
-            return $path;
-        });
+        return collect($paths)->map(
+            function ($path) use ($basePath) {
+                return realpath($basePath.$path);
+            }
+        )->filter(
+            function ($path) {
+                return $path;
+            }
+        );
     }
 
     /**

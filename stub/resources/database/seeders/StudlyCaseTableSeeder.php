@@ -17,10 +17,12 @@ class StudlyCaseTableSeeder extends Seeder
             return;
         }
 
-        DB::table('snake_case')->insert([
+        DB::table('snake_case')->insert(
+            [
             ['name' => 'foo'],
             ['name' => 'bar'],
             ['name' => 'baz'],
-        ]);
+            ]
+        );
     }
 }

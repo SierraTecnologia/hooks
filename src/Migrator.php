@@ -18,9 +18,11 @@ class Migrator extends BaseMigrator
     {
         $this->notes = [];
 
-        $this->requireFiles($migrations = $this->pendingMigrations(
-            $files, $this->repository->getRan()
-        ));
+        $this->requireFiles(
+            $migrations = $this->pendingMigrations(
+                $files, $this->repository->getRan()
+            )
+        );
 
         // Once we have all these migrations that are outstanding we are ready to run
         // we will go ahead and run them "up". This will execute each migration as
@@ -34,9 +36,11 @@ class Migrator extends BaseMigrator
     {
         $this->notes = [];
 
-        $files = collect($files)->keyBy(function ($file) {
-            return rtrim(basename($file), '.php');
-        })->all();
+        $files = collect($files)->keyBy(
+            function ($file) {
+                return rtrim(basename($file), '.php');
+            }
+        )->all();
 
         // Next, we will reverse the migration list so we can run them back in the
         // correct order for resetting this database. This will allow us to get
@@ -57,9 +61,11 @@ class Migrator extends BaseMigrator
         // Since the getRan method that retrieves the migration name just gives us the
         // migration name, we will format the names into objects with the name as a
         // property on the objects so that we can pass it to the rollback method.
-        $migrations = collect($migrations)->map(function ($m) {
-            return (object) ['migration' => $m];
-        })->all();
+        $migrations = collect($migrations)->map(
+            function ($m) {
+                return (object) ['migration' => $m];
+            }
+        )->all();
 
         return $this->rollbackMigrationsByFiles(
             $migrations, $files, compact('pretend')

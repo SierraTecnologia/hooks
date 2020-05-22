@@ -43,9 +43,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $composer = new Composer();
         $composer->set('repositories', []);
         $composer->set('minimum-stability', 'stable');
-        $composer->set('require', [
+        $composer->set(
+            'require', [
             'laravel/framework' => $composer->get('require.laravel/framework'),
-        ]);
+            ]
+        );
         $composer->save();
         $filesystem->delete(base_path('composer.lock'));
 
@@ -54,9 +56,11 @@ class TestCase extends \Orchestra\Testbench\TestCase
         $filesystem->makeDirectory(base_path('vendor'));
 
         // Setup Hook repository
-        $this->artisan('hook:setup', [
+        $this->artisan(
+            'hook:setup', [
             '--url' => env('HOOKS_COMPOSER_REPOSITORY', static::COMPOSER_REPOSITORY),
-        ]);
+            ]
+        );
 
         // Reload JSON files
         app(Hooks::class)->readJsonFile();
@@ -84,10 +88,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
     {
         // Setup default database to use sqlite :memory:
         $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', [
+        $app['config']->set(
+            'database.connections.testbench', [
             'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
-        ]);
+            ]
+        );
     }
 }
