@@ -4,6 +4,7 @@ namespace Hooks;
 
 use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem;
+use Exception;
 
 class Composer
 {
@@ -80,10 +81,13 @@ class Composer
 
     protected function read()
     {
+        if (!$composerFileContent = $this->decode(
+            $this->filesystem->get($this->location)
+        )) {
+            throw new Exception('Erro no arquivo composer.json');
+        }
         $this->items = new Repository(
-            $this->decode(
-                $this->filesystem->get($this->location)
-            )
+            $composerFileContent
         );
 
         $this->changed = false;
