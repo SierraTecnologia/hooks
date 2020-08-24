@@ -14,7 +14,7 @@ class HooksTest extends TestCase
 {
     const COMPOSER_REPOSITORY = 'https://testing.sierratecnologia.io';
 
-    public function setUp(): void
+    protected function setUp(): void: void
     {
         // Set Hooks environment
         Hooks::setMemoryLimit('5G');
