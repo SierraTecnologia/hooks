@@ -83,7 +83,8 @@ class Composer
     {
         if (!$composerFileContent = $this->decode(
             $this->filesystem->get($this->location)
-        )) {
+        )
+        ) {
             throw new Exception('Erro no arquivo composer.json');
         }
         $this->items = new Repository(
