@@ -72,7 +72,7 @@ class Migrator extends BaseMigrator
         );
     }
 
-    protected function rollbackMigrationsByFiles(array $migrations, $files, array $options)
+    protected function rollbackMigrationsByFiles(array $migrations, array $files, array $options)
     {
         $rolledBack = [];
 

@@ -51,7 +51,7 @@ class Hooks
         $this->prepareMemoryLimit();
     }
 
-    public static function setUseVersionWildcardOnUpdate($boolean)
+    public static function setUseVersionWildcardOnUpdate(bool $boolean)
     {
         static::$useVersionWildcardOnUpdate = $boolean;
     }
@@ -90,6 +90,9 @@ class Hooks
         }
     }
 
+    /**
+     * @param false|string $value
+     */
     protected function memoryInBytes($value)
     {
         $unit = strtolower(substr($value, -1, 1));
@@ -740,8 +743,10 @@ class Hooks
 
     /**
      * Read hooks.json file.
+     *
+     * @param array $localsIncluded
      */
-    public function readJsonFile($localsIncluded = [])
+    public function readJsonFile(array $localsIncluded = [])
     {
         $hooks = [];
 
@@ -864,7 +869,10 @@ class Hooks
         );
     }
 
-    public function runComposer($input)
+    /**
+     * @param (array|string)[] $input
+     */
+    public function runComposer(array $input)
     {
         $input = new ArrayInput(
             array_merge(
@@ -984,7 +992,7 @@ class Hooks
      *
      * @param \Hooks\Hook $hook
      */
-    protected function publishHook(Hook $hook, $force = false)
+    protected function publishHook(Hook $hook, bool $force = false)
     {
         $folders = (array) $hook->getComposerHookKey('assets', []);
         $basePath = $hook->getPath().'/';

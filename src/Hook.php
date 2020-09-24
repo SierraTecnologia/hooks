@@ -37,7 +37,10 @@ class Hook implements ArrayAccess, Arrayable
         return $this->getComposerHookKey('providers', []);
     }
 
-    public function getComposerHookKey($key, $default = null)
+    /**
+     * @param array|null $default
+     */
+    public function getComposerHookKey(string $key, ?array $default = null)
     {
         if (is_null($this->composerJson)) {
             $this->loadComposerJson();
@@ -127,6 +130,9 @@ class Hook implements ArrayAccess, Arrayable
         }
     }
 
+    /**
+     * @param array-key $key
+     */
     public function setAttribute($key, $value)
     {
         $method = Str::camel('set_'.$key.'_attribute');

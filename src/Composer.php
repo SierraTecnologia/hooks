@@ -25,7 +25,10 @@ class Composer
         $this->read();
     }
 
-    public function addRepository($name, $info)
+    /**
+     * @param (array|bool|null|string)[] $info
+     */
+    public function addRepository($name, array $info)
     {
         if (!$this->items->has('repositories')) {
             $this->items['repositories'] = [];
@@ -38,7 +41,10 @@ class Composer
         return $this;
     }
 
-    public function addConfig($key, $value)
+    /**
+     * @param false $value
+     */
+    public function addConfig(string $key, bool $value)
     {
         if (!$this->items->has('config')) {
             $this->items['config'] = [];
