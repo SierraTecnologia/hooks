@@ -8,25 +8,13 @@ use Hooks\Hooks;
 
 class MakeCommand extends Command
 {
-    protected $signature = 'hook:make {name}';
+    protected string $signature = 'hook:make {name}';
 
-    protected $description = 'Make a hook';
+    protected string $description = 'Make a hook';
 
-    protected $hooks;
+    protected Hooks $hooks;
 
-    public function __construct(Hooks $hooks)
-    {
-        $this->hooks = $hooks;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
-
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name');
         $name = Str::kebab($name);

@@ -14,7 +14,7 @@ use Illuminate\Database\ConnectionResolverInterface as Resolver;
 
 class Migrator extends BaseMigrator
 {
-    public function runFiles(array $files, array $options = [])
+    public function runFiles(array $files, array $options = []): array
     {
         $this->notes = [];
 
@@ -72,7 +72,12 @@ class Migrator extends BaseMigrator
         );
     }
 
-    protected function rollbackMigrationsByFiles(array $migrations, array $files, array $options)
+    /**
+     * @return array
+     *
+     * @psalm-return list<mixed>
+     */
+    protected function rollbackMigrationsByFiles(array $migrations, array $files, array $options): array
     {
         $rolledBack = [];
 

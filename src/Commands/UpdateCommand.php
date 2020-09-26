@@ -7,23 +7,11 @@ use Hooks\Hooks;
 
 class UpdateCommand extends Command
 {
-    protected $signature = 'hook:update {name} {version?} {--no-migrate} {--no-seed} {--no-publish} {--force}';
+    protected string $signature = 'hook:update {name} {version?} {--no-migrate} {--no-seed} {--no-publish} {--force}';
 
-    protected $description = 'Update a hook';
+    protected string $description = 'Update a hook';
 
-    protected $hooks;
-
-    public function __construct(Hooks $hooks)
-    {
-        $this->hooks = $hooks;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
+    protected Hooks $hooks;
 
     public function handle()
     {
@@ -33,7 +21,7 @@ class UpdateCommand extends Command
 
         $version = $this->argument('version');
 
-        $hook = $hooks->where('name', $name)->first();
+        $hooks->where('name', $name)->first();
 
         $updated = $this->hooks->update(
             $name,

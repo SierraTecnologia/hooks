@@ -7,25 +7,13 @@ use Hooks\Hooks;
 
 class EnableCommand extends Command
 {
-    protected $signature = 'hook:enable {name}';
+    protected string $signature = 'hook:enable {name}';
 
-    protected $description = 'Enable a hook';
+    protected string $description = 'Enable a hook';
 
-    protected $hooks;
+    protected Hooks $hooks;
 
-    public function __construct(Hooks $hooks)
-    {
-        $this->hooks = $hooks;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
-
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name');
 

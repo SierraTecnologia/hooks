@@ -13,25 +13,13 @@ class SetupCommand extends Command
 {
     const REPOSITORY_NAME = 'hooks';
 
-    protected $signature = 'hook:setup {--url=https://sierratecnologia.io}';
+    protected string $signature = 'hook:setup {--url=https://sierratecnologia.io}';
 
-    protected $description = 'Prepare Composer for using Hooks.';
+    protected string $description = 'Prepare Composer for using Hooks.';
 
-    protected $filesystem;
+    protected Filesystem $filesystem;
 
-    public function __construct(Filesystem $filesystem)
-    {
-        $this->filesystem = $filesystem;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
-
-    public function handle()
+    public function handle(): void
     {
         $composer = new Composer(base_path('composer.json'));
 

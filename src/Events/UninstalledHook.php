@@ -4,6 +4,9 @@ namespace Hooks\Events;
 
 class UninstalledHook
 {
+    /**
+     * @var string
+     */
     public $hook;
 
     /**

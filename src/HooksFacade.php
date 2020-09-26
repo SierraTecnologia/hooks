@@ -9,7 +9,7 @@ class HooksFacade extends Facade
     /**
      * Get the registered name of the component.
      *
-     * @return string
+     * @return Hooks::class
      */
     protected static function getFacadeAccessor()
     {

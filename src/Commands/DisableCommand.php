@@ -7,25 +7,13 @@ use Hooks\Hooks;
 
 class DisableCommand extends Command
 {
-    protected $signature = 'hook:disable {name}';
+    protected string $signature = 'hook:disable {name}';
 
-    protected $description = 'Disable a hook';
+    protected string $description = 'Disable a hook';
 
-    protected $hooks;
+    protected Hooks $hooks;
 
-    public function __construct(Hooks $hooks)
-    {
-        $this->hooks = $hooks;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
-
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name');
 

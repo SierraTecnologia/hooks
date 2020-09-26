@@ -4,6 +4,9 @@ namespace Hooks\Events;
 
 class UpdatesAvailableForHook
 {
+    /**
+     * @var string
+     */
     public $hook;
 
     /**

@@ -4,6 +4,9 @@ namespace Hooks\Events;
 
 class InstallingHook
 {
+    /**
+     * @var string
+     */
     public $hook;
 
     /**

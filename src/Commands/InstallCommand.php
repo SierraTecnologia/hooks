@@ -7,25 +7,13 @@ use Hooks\Hooks;
 
 class InstallCommand extends Command
 {
-    protected $signature = 'hook:install {name} {version?} {--enable} {--no-migrate} {--no-seed} {--no-publish}';
+    protected string $signature = 'hook:install {name} {version?} {--enable} {--no-migrate} {--no-seed} {--no-publish}';
 
-    protected $description = 'Download and install a hook from remote https://sierratecnologia.io';
+    protected string $description = 'Download and install a hook from remote https://sierratecnologia.io';
 
-    protected $hooks;
+    protected Hooks $hooks;
 
-    public function __construct(Hooks $hooks)
-    {
-        $this->hooks = $hooks;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
-
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name');
 

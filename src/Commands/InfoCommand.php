@@ -7,23 +7,11 @@ use Hooks\Hooks;
 
 class InfoCommand extends Command
 {
-    protected $signature = 'hook:info {name}';
+    protected string $signature = 'hook:info {name}';
 
-    protected $description = 'Get information on a hook';
+    protected string $description = 'Get information on a hook';
 
-    protected $hooks;
-
-    public function __construct(Hooks $hooks)
-    {
-        $this->hooks = $hooks;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
+    protected Hooks $hooks;
 
     public function handle()
     {

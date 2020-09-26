@@ -7,25 +7,13 @@ use Hooks\Hooks;
 
 class CheckCommand extends Command
 {
-    protected $signature = 'hook:check';
+    protected string $signature = 'hook:check';
 
-    protected $description = 'Check for updates and show hooks that can be updated';
+    protected string $description = 'Check for updates and show hooks that can be updated';
 
-    protected $hooks;
+    protected Hooks $hooks;
 
-    public function __construct(Hooks $hooks)
-    {
-        $this->hooks = $hooks;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
-
-    public function handle()
+    public function handle(): void
     {
         $hooks = $this->hooks->checkForUpdates();
 

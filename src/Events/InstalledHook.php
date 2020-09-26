@@ -6,7 +6,7 @@ use Hooks\Hook;
 
 class InstalledHook
 {
-    public $hook;
+    public Hook $hook;
 
     /**
      * Create a new event instance.

@@ -6,7 +6,7 @@ use Hooks\Hook;
 
 class DisabledHook
 {
-    public $hook;
+    public Hook $hook;
 
     /**
      * Create a new event instance.

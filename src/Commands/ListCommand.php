@@ -7,25 +7,13 @@ use Hooks\Hooks;
 
 class ListCommand extends Command
 {
-    protected $signature = 'hook:list';
+    protected string $signature = 'hook:list';
 
-    protected $description = 'List installed hooks';
+    protected string $description = 'List installed hooks';
 
-    protected $hooks;
+    protected Hooks $hooks;
 
-    public function __construct(Hooks $hooks)
-    {
-        $this->hooks = $hooks;
-
-        parent::__construct();
-    }
-
-    public function fire()
-    {
-        return $this->handle();
-    }
-
-    public function handle()
+    public function handle(): void
     {
         $this->table(
             ['Name', 'Status'], $this->hooks->hooks()->transform(

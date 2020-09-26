@@ -6,7 +6,7 @@ use Hooks\Hook;
 
 class UninstallingHook
 {
-    public $hook;
+    public Hook $hook;
 
     /**
      * Create a new event instance.

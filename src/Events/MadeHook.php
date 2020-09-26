@@ -4,6 +4,9 @@ namespace Hooks\Events;
 
 class MadeHook
 {
+    /**
+     * @var string
+     */
     public $hook;
 
     /**
