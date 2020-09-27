@@ -2,15 +2,15 @@
 
 namespace Hooks\Commands;
 
+use Hooks\Hooks;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
-use Hooks\Hooks;
 
 class MakeCommand extends Command
 {
-    protected string $signature = 'hook:make {name}';
+    protected $signature = 'hook:make {name}';
 
-    protected string $description = 'Make a hook';
+    protected $description = 'Make a hook';
 
     protected Hooks $hooks;
 

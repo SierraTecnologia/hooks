@@ -7,9 +7,9 @@ use Hooks\Hooks;
 
 class CheckCommand extends Command
 {
-    protected string $signature = 'hook:check';
+    protected $signature = 'hook:check';
 
-    protected string $description = 'Check for updates and show hooks that can be updated';
+    protected $description = 'Check for updates and show hooks that can be updated';
 
     protected Hooks $hooks;
 

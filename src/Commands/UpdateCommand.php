@@ -7,9 +7,9 @@ use Hooks\Hooks;
 
 class UpdateCommand extends Command
 {
-    protected string $signature = 'hook:update {name} {version?} {--no-migrate} {--no-seed} {--no-publish} {--force}';
+    protected $signature = 'hook:update {name} {version?} {--no-migrate} {--no-seed} {--no-publish} {--force}';
 
-    protected string $description = 'Update a hook';
+    protected $description = 'Update a hook';
 
     protected Hooks $hooks;
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class Hook implements ArrayAccess, Arrayable
 {
     protected $name;
-    protected string $description = 'This is a hook.';
+    protected $description = 'This is a hook.';
     protected $version;
 
     /**

@@ -2,14 +2,14 @@
 
 namespace Hooks\Commands;
 
-use Illuminate\Console\Command;
 use Hooks\Hooks;
+use Illuminate\Console\Command;
 
 class InstallCommand extends Command
 {
-    protected string $signature = 'hook:install {name} {version?} {--enable} {--no-migrate} {--no-seed} {--no-publish}';
+    protected $signature = 'hook:install {name} {version?} {--enable} {--no-migrate} {--no-seed} {--no-publish}';
 
-    protected string $description = 'Download and install a hook from remote https://sierratecnologia.io';
+    protected $description = 'Download and install a hook from remote https://sierratecnologia.io';
 
     protected Hooks $hooks;
 

@@ -7,9 +7,9 @@ use Hooks\Hooks;
 
 class EnableCommand extends Command
 {
-    protected string $signature = 'hook:enable {name}';
+    protected $signature = 'hook:enable {name}';
 
-    protected string $description = 'Enable a hook';
+    protected $description = 'Enable a hook';
 
     protected Hooks $hooks;
 

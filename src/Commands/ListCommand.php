@@ -7,9 +7,9 @@ use Hooks\Hooks;
 
 class ListCommand extends Command
 {
-    protected string $signature = 'hook:list';
+    protected $signature = 'hook:list';
 
-    protected string $description = 'List installed hooks';
+    protected $description = 'List installed hooks';
 
     protected Hooks $hooks;
 

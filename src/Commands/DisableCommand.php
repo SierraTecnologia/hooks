@@ -7,9 +7,9 @@ use Hooks\Hooks;
 
 class DisableCommand extends Command
 {
-    protected string $signature = 'hook:disable {name}';
+    protected $signature = 'hook:disable {name}';
 
-    protected string $description = 'Disable a hook';
+    protected $description = 'Disable a hook';
 
     protected Hooks $hooks;
 

@@ -2,20 +2,20 @@
 
 namespace Hooks\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Str;
 use Hooks\Composer;
 use Hooks\Events\Setup;
 use Hooks\HooksServiceProvider;
+use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class SetupCommand extends Command
 {
     const REPOSITORY_NAME = 'hooks';
 
-    protected string $signature = 'hook:setup {--url=https://sierratecnologia.io}';
+    protected $signature = 'hook:setup {--url=https://sierratecnologia.io}';
 
-    protected string $description = 'Prepare Composer for using Hooks.';
+    protected $description = 'Prepare Composer for using Hooks.';
 
     protected Filesystem $filesystem;
 
@@ -24,7 +24,8 @@ class SetupCommand extends Command
         $composer = new Composer(base_path('composer.json'));
 
         $composer->addRepository(
-            static::REPOSITORY_NAME, [
+            static::REPOSITORY_NAME,
+            [
             'type' => 'composer',
             'url'  => $this->option('url'),
             ]

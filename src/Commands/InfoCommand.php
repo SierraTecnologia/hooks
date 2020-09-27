@@ -7,9 +7,9 @@ use Hooks\Hooks;
 
 class InfoCommand extends Command
 {
-    protected string $signature = 'hook:info {name}';
+    protected $signature = 'hook:info {name}';
 
-    protected string $description = 'Get information on a hook';
+    protected $description = 'Get information on a hook';
 
     protected Hooks $hooks;
 
