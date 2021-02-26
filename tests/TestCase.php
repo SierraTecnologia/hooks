@@ -16,7 +16,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * Setup the test environment.
      */
-    protected function setUp(): void: void
+    protected function setUp(): void
     {
         parent::setUp();
 
