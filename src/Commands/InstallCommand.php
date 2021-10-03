@@ -25,7 +25,7 @@ class InstallCommand extends Command
         return $this->handle();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $name = $this->argument('name');
 

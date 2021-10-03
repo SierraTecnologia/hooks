@@ -66,12 +66,12 @@ class Hook implements ArrayAccess, Arrayable
         return $this->getComposerHookKey('aliases', []);
     }
 
-    public function loadComposerJson()
+    public function loadComposerJson(): void
     {
         $this->composerJson = json_decode($this->getComposerJsonFile(), true);
     }
 
-    public function getPath()
+    public function getPath(): string
     {
         if ($this->isLocal()) {
             return base_path('hooks/'.$this->name);
@@ -85,12 +85,12 @@ class Hook implements ArrayAccess, Arrayable
         return $this->filesystem->get($this->getPath().'/composer.json');
     }
 
-    public function setLatest($latest)
+    public function setLatest($latest): void
     {
         $this->latest = $latest;
     }
 
-    public function loadJson($path = null)
+    public function loadJson($path = null): void
     {
         if (is_null($path)) {
             if ($this->isLocal()) {
@@ -103,14 +103,14 @@ class Hook implements ArrayAccess, Arrayable
         $this->mergeWithJson($path);
     }
 
-    public function update(array $parameters)
+    public function update(array $parameters): void
     {
         foreach ($parameters as $key => $value) {
             $this->setAttribute($key, $value);
         }
     }
 
-    public function outdated()
+    public function outdated(): bool
     {
         if (is_null($this->latest)) {
             $this->latest = app('hooks')->outdated($this->name);
@@ -119,7 +119,7 @@ class Hook implements ArrayAccess, Arrayable
         return $this->latest != $this->version;
     }
 
-    public function mergeWithJson($path)
+    public function mergeWithJson($path): void
     {
         if ($this->filesystem->exists($path)) {
             $data = json_decode($this->filesystem->get($path), true);

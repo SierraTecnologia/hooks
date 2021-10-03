@@ -14,7 +14,7 @@ use Illuminate\Database\ConnectionResolverInterface as Resolver;
 
 class Migrator extends BaseMigrator
 {
-    public function runFiles(array $files, array $options = [])
+    public function runFiles(array $files, array $options = []): array
     {
         $this->notes = [];
 
@@ -32,7 +32,12 @@ class Migrator extends BaseMigrator
         return $migrations;
     }
 
-    public function resetFiles(array $files = [], $pretend = false)
+    /**
+     * @return array
+     *
+     * @psalm-return list<mixed>
+     */
+    public function resetFiles(array $files = [], $pretend = false): array
     {
         $this->notes = [];
 
@@ -56,7 +61,12 @@ class Migrator extends BaseMigrator
         return $this->resetMigrationsByFiles($migrations, $files, $pretend);
     }
 
-    protected function resetMigrationsByFiles(array $migrations, array $files, $pretend = false)
+    /**
+     * @return array
+     *
+     * @psalm-return list<mixed>
+     */
+    protected function resetMigrationsByFiles(array $migrations, array $files, $pretend = false): array
     {
         // Since the getRan method that retrieves the migration name just gives us the
         // migration name, we will format the names into objects with the name as a
@@ -72,7 +82,12 @@ class Migrator extends BaseMigrator
         );
     }
 
-    protected function rollbackMigrationsByFiles(array $migrations, array $files, array $options)
+    /**
+     * @return array
+     *
+     * @psalm-return list<mixed>
+     */
+    protected function rollbackMigrationsByFiles(array $migrations, array $files, array $options): array
     {
         $rolledBack = [];
 

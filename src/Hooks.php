@@ -51,22 +51,22 @@ class Hooks
         $this->prepareMemoryLimit();
     }
 
-    public static function setUseVersionWildcardOnUpdate(bool $boolean)
+    public static function setUseVersionWildcardOnUpdate(bool $boolean): void
     {
         static::$useVersionWildcardOnUpdate = $boolean;
     }
 
-    public static function useVersionWildcardOnUpdate($boolean = true)
+    public static function useVersionWildcardOnUpdate($boolean = true): void
     {
         static::setUseVersionWildcardOnUpdate($boolean);
     }
 
-    public static function enableVersionWildcardOnUpdate()
+    public static function enableVersionWildcardOnUpdate(): void
     {
         static::setUseVersionWildcardOnUpdate(true);
     }
 
-    public static function disableVersionWildcardOnUpdate()
+    public static function disableVersionWildcardOnUpdate(): void
     {
         static::setUseVersionWildcardOnUpdate(false);
     }
@@ -76,12 +76,12 @@ class Hooks
         return static::$useVersionWildcardOnUpdate;
     }
 
-    public static function fakeDateTime(Carbon $dateTime)
+    public static function fakeDateTime(Carbon $dateTime): void
     {
         static::$fakeDateTime = $dateTime;
     }
 
-    public function readOutdated()
+    public function readOutdated(): void
     {
         $file = base_path('hooks/outdated.json');
 
@@ -92,8 +92,10 @@ class Hooks
 
     /**
      * @param false|string $value
+     *
+     * @return int
      */
-    protected function memoryInBytes($value)
+    protected function memoryInBytes($value): int
     {
         $unit = strtolower(substr($value, -1, 1));
         $value = (int) $value;
@@ -112,7 +114,7 @@ class Hooks
         return $value;
     }
 
-    public static function setMemoryLimit($memoryLimit)
+    public static function setMemoryLimit($memoryLimit): void
     {
         static::$memoryLimit = $memoryLimit;
 
@@ -126,6 +128,9 @@ class Hooks
         return static::$memoryLimit;
     }
 
+    /**
+     * @return void
+     */
     public function prepareMemoryLimit()
     {
         if (!function_exists('ini_set')) {
@@ -152,7 +157,7 @@ class Hooks
         static::$memoryLimitSet = true;
     }
 
-    public function prepareComposer()
+    public function prepareComposer(): void
     {
         // Set environment
         //putenv('COMPOSER_BINARY='.realpath($_SERVER['argv'][0]));
@@ -177,8 +182,10 @@ class Hooks
      * Set remote url.
      *
      * @param $remote
+     *
+     * @return void
      */
-    public static function setRemote($remote)
+    public static function setRemote($remote): void
     {
         static::$remote = $remote;
     }
@@ -188,7 +195,7 @@ class Hooks
         return $this->lastRemoteCheck;
     }
 
-    public function setLastRemoteCheck(Carbon $carbon)
+    public function setLastRemoteCheck(Carbon $carbon): void
     {
         $this->lastRemoteCheck = $carbon;
     }
@@ -199,8 +206,10 @@ class Hooks
      * @param $name
      *
      * @throws \Hooks\Exceptions\HookAlreadyInstalledException
+     *
+     * @return void
      */
-    public function install($name, $version = null, $migrate = true, $seed = true, $publish = true)
+    public function install($name, $version = null, $migrate = true, $seed = true, $publish = true): void
     {
         // Check if already installed
         if ($this->installed($name)) {
@@ -251,7 +260,7 @@ class Hooks
         event(new Events\InstalledHook($this->hooks[$name]));
     }
 
-    public function prepareLocalInstallation($name)
+    public function prepareLocalInstallation($name): void
     {
         $this->composerJson->addRepository(
             $name, [
@@ -270,8 +279,10 @@ class Hooks
      * @param $keep boolean
      *
      * @throws \Hooks\Exceptions\HookNotInstalledException
+     *
+     * @return void
      */
-    public function uninstall($name, $delete = false, $unmigrate = true, $unseed = true, $unpublish = true)
+    public function uninstall($name, $delete = false, $unmigrate = true, $unseed = true, $unpublish = true): void
     {
         // Check if installed
         if (!$this->installed($name)) {
@@ -412,8 +423,10 @@ class Hooks
      * @throws \Hooks\Exceptions\HookNotFoundException
      * @throws \Hooks\Exceptions\HookNotInstalledException
      * @throws \Hooks\Exceptions\HookAlreadyEnabledException
+     *
+     * @return void
      */
-    public function enable($name)
+    public function enable($name): void
     {
         // Check if exists
         if (!$this->downloaded($name)) {
@@ -449,8 +462,10 @@ class Hooks
      * @throws \Hooks\Exceptions\HookNotFoundException
      * @throws \Hooks\Exceptions\HookNotEnabledException
      * @throws \Hooks\Exceptions\HookNotInstalledException
+     *
+     * @return void
      */
-    public function disable($name)
+    public function disable($name): void
     {
         // Check if exists
         if (!$this->downloaded($name)) {
@@ -484,8 +499,10 @@ class Hooks
      * @param $name
      *
      * @throws \Hooks\Exceptions\HookAlreadyExistsException
+     *
+     * @return void
      */
-    public function make($name)
+    public function make($name): void
     {
         $studlyCase = Str::studly($name);
 
@@ -511,7 +528,7 @@ class Hooks
         event(new Events\MadeHook($name));
     }
 
-    protected function makeStubFiles($name)
+    protected function makeStubFiles($name): void
     {
         $replaces = [
             'kebab-case'          => $name,
@@ -556,7 +573,7 @@ class Hooks
         return $dateTime->format('Y_m_d_His');
     }
 
-    protected function replace($content, array $replaces)
+    protected function replace($content, array $replaces): string
     {
         return str_replace(array_keys($replaces), array_values($replaces), $content);
     }
@@ -745,8 +762,10 @@ class Hooks
      * Read hooks.json file.
      *
      * @param array $localsIncluded
+     *
+     * @return void
      */
-    public function readJsonFile(array $localsIncluded = [])
+    public function readJsonFile(array $localsIncluded = []): void
     {
         $hooks = [];
 
@@ -803,7 +822,12 @@ class Hooks
         $this->hooks = collect($hooks);
     }
 
-    public function readComposerHooks($file = null)
+    /**
+     * @return Hook[]
+     *
+     * @psalm-return array<Hook>
+     */
+    public function readComposerHooks($file = null): array
     {
         if (is_null($file)) {
             $file = base_path('composer.lock');
@@ -824,7 +848,12 @@ class Hooks
         return $hooks;
     }
 
-    public function readLocalHooks()
+    /**
+     * @return Hook[]
+     *
+     * @psalm-return array<Hook>
+     */
+    public function readLocalHooks(): array
     {
         $hooks = [];
         $directories = Arr::except($this->filesystem->directories(base_path('hooks')), ['.', '..']);
@@ -846,8 +875,10 @@ class Hooks
 
     /**
      * Remake hooks.json file.
+     *
+     * @return void
      */
-    public function remakeJson()
+    public function remakeJson(): void
     {
         $json = json_encode(
             [
@@ -891,7 +922,7 @@ class Hooks
         return $output->output();
     }
 
-    public function checkForUpdates()
+    public function checkForUpdates(): \Illuminate\Support\Collection
     {
         $output = $this->runComposer(
             [
@@ -929,8 +960,10 @@ class Hooks
      * Run migrations found for a specific hook.
      *
      * @param \Hooks\Hook $hook
+     *
+     * @return void
      */
-    protected function migrateHook(Hook $hook)
+    protected function migrateHook(Hook $hook): void
     {
         $migrations = (array) $hook->getComposerHookKey('migrations', []);
 
@@ -947,8 +980,10 @@ class Hooks
      * Rollback migrations found for a specific hook.
      *
      * @param \Hooks\Hook $hook
+     *
+     * @return void
      */
-    protected function unmigrateHook(Hook $hook)
+    protected function unmigrateHook(Hook $hook): void
     {
         $migrations = (array) $hook->getComposerHookKey('migrations', []);
 
@@ -965,8 +1000,10 @@ class Hooks
      * Run seeders found for a specific hook.
      *
      * @param \Hooks\Hook $hook
+     *
+     * @return void
      */
-    protected function seedHook(Hook $hook)
+    protected function seedHook(Hook $hook): void
     {
         $folders = (array) $hook->getComposerHookKey('seeders', []);
         $basePath = $hook->getPath().'/';
@@ -978,8 +1015,10 @@ class Hooks
      * Run unseeders found for a specific hook.
      *
      * @param \Hooks\Hook $hook
+     *
+     * @return void
      */
-    protected function unseedHook(Hook $hook)
+    protected function unseedHook(Hook $hook): void
     {
         $folders = (array) $hook->getComposerHookKey('unseeders', []);
         $basePath = $hook->getPath().'/';
@@ -991,8 +1030,10 @@ class Hooks
      * Publish assets found for a specific hook.
      *
      * @param \Hooks\Hook $hook
+     *
+     * @return void
      */
-    protected function publishHook(Hook $hook, bool $force = false)
+    protected function publishHook(Hook $hook, bool $force = false): void
     {
         $folders = (array) $hook->getComposerHookKey('assets', []);
         $basePath = $hook->getPath().'/';
@@ -1080,8 +1121,10 @@ class Hooks
      * Unpublish assets found for a specific hook.
      *
      * @param \Hooks\Hook $hook
+     *
+     * @return void
      */
-    protected function unpublishHook(Hook $hook)
+    protected function unpublishHook(Hook $hook): void
     {
         $folders = (array) $hook->getComposerHookKey('assets', []);
         $basePath = $hook->getPath().'/';
@@ -1137,8 +1180,10 @@ class Hooks
      *
      * @param array  $folders
      * @param string $basePath
+     *
+     * @return void
      */
-    protected function runSeeders($folders, $basePath)
+    protected function runSeeders($folders, $basePath): void
     {
         $filesystem = $this->filesystem;
 
@@ -1218,7 +1263,7 @@ class Hooks
         return $path;
     }
 
-    protected function clearTemponaryFiles()
+    protected function clearTemponaryFiles(): void
     {
         foreach ($this->tempDirectories as $directory) {
             $this->filesystem->deleteDirectory($directory);
@@ -1231,6 +1276,9 @@ class RawOutput extends \Symfony\Component\Console\Output\Output
 {
     protected $content;
 
+    /**
+     * @return void
+     */
     public function doWrite($message, $newline)
     {
         $this->content .= $message;
