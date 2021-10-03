@@ -54,8 +54,10 @@ class HooksServiceProvider extends ServiceProvider
 
     /**
      * Register Hook Service Providers.
+     *
+     * @return void
      */
-    public function registerHookProviders()
+    public function registerHookProviders(): void
     {
         // load only the enabled hooks
         $hooks = $this->app['hooks']->hooks()->where('enabled', true);
@@ -76,6 +78,8 @@ class HooksServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application services.
+     *
+     * @return void
      */
     public function boot()
     {
@@ -89,8 +93,10 @@ class HooksServiceProvider extends ServiceProvider
 
     /**
      * Register commands.
+     *
+     * @return void
      */
-    protected function registerCommands()
+    protected function registerCommands(): void
     {
         $this->commands(Commands\SetupCommand::class);
         $this->commands(Commands\MakeCommand::class);

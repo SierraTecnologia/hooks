@@ -25,7 +25,7 @@ class CheckCommand extends Command
         return $this->handle();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $hooks = $this->hooks->checkForUpdates();
 

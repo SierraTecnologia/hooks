@@ -31,7 +31,7 @@ class SetupCommand extends Command
         return $this->handle();
     }
 
-    public function handle()
+    public function handle(): void
     {
         $composer = new Composer(base_path('composer.json'));
 

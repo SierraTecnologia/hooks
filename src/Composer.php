@@ -27,8 +27,10 @@ class Composer
 
     /**
      * @param (array|bool|null|string)[] $info
+     *
+     * @return static
      */
-    public function addRepository($name, array $info)
+    public function addRepository($name, array $info): self
     {
         if (!$this->items->has('repositories')) {
             $this->items['repositories'] = [];
@@ -43,8 +45,10 @@ class Composer
 
     /**
      * @param false $value
+     *
+     * @return static
      */
-    public function addConfig(string $key, bool $value)
+    public function addConfig(string $key, bool $value): self
     {
         if (!$this->items->has('config')) {
             $this->items['config'] = [];
@@ -57,7 +61,10 @@ class Composer
         return $this;
     }
 
-    public function set($key, $value)
+    /**
+     * @return static
+     */
+    public function set($key, $value): self
     {
         $this->items->set($key, $value);
 
@@ -76,7 +83,7 @@ class Composer
         return $this->items->has($key);
     }
 
-    public function save()
+    public function save(): void
     {
         if ($this->changed) {
             $this->filesystem->put($this->location, $this->encode($this->items->all()));
@@ -85,7 +92,7 @@ class Composer
         }
     }
 
-    protected function read()
+    protected function read(): void
     {
         if (!$composerFileContent = $this->decode(
             $this->filesystem->get($this->location)
@@ -105,6 +112,9 @@ class Composer
         return json_decode($string, true);
     }
 
+    /**
+     * @return false|string
+     */
     protected function encode(array $array)
     {
         return json_encode($array, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
