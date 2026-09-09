@@ -1279,7 +1279,7 @@ class RawOutput extends \Symfony\Component\Console\Output\Output
     /**
      * @return void
      */
-    public function doWrite($message, $newline)
+    protected function doWrite(string $message, bool $newline): void
     {
         $this->content .= $message;
 
