@@ -403,7 +403,7 @@ class HooksTest extends TestCase
         );
 
         // Check that the hook folder exists
-        $this->assertDirectoryNotExists(base_path('hooks/local-test-hook'));
+        $this->assertDirectoryDoesNotExist(base_path('hooks/local-test-hook'));
     }
 
     public function test_uninstall_hook_without_delete_parameter()
@@ -682,7 +682,7 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Make sure dependency not already exists
-        $this->assertDirectoryNotExists(base_path('vendor/marktopper/composer-hook-dependency-1'));
+        $this->assertDirectoryDoesNotExist(base_path('vendor/marktopper/composer-hook-dependency-1'));
 
         // Install hook
         $this->artisan(
@@ -700,8 +700,8 @@ class HooksTest extends TestCase
         $filesystem = app(Filesystem::class);
 
         // Make sure dependency not already exists
-        $this->assertDirectoryNotExists(base_path('vendor/marktopper/composer-hook-dependency-1'));
-        $this->assertDirectoryNotExists(base_path('vendor/marktopper/composer-hook-dependency-2'));
+        $this->assertDirectoryDoesNotExist(base_path('vendor/marktopper/composer-hook-dependency-1'));
+        $this->assertDirectoryDoesNotExist(base_path('vendor/marktopper/composer-hook-dependency-2'));
 
         // Install hook
         $this->artisan(
@@ -713,7 +713,7 @@ class HooksTest extends TestCase
 
         // Make sure dependency is now downloaded
         $this->assertDirectoryExists(base_path('vendor/marktopper/composer-hook-dependency-1'));
-        $this->assertDirectoryNotExists(base_path('vendor/marktopper/composer-hook-dependency-2'));
+        $this->assertDirectoryDoesNotExist(base_path('vendor/marktopper/composer-hook-dependency-2'));
 
         Hooks::useVersionWildcardOnUpdate();
 
