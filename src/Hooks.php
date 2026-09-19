@@ -34,6 +34,21 @@ class Hooks
 
     protected static $fakeDateTime = false;
 
+    /**
+     * @var callable|null
+     */
+    protected static $composerRunner = null;
+
+    public static function setComposerRunner(?callable $runner): void
+    {
+        static::$composerRunner = $runner;
+    }
+
+    public static function getComposerRunner(): ?callable
+    {
+        return static::$composerRunner;
+    }
+
     public function __construct(Filesystem $filesystem, Migrator $migrator)
     {
         $this->app = Application::getInstance();
@@ -905,6 +920,15 @@ class Hooks
      */
     public function runComposer(array $input)
     {
+        if (static::$composerRunner !== null) {
+            $output = (static::$composerRunner)($input, $this);
+            $rawOutput = new RawOutput();
+            $rawOutput->write($output ?? '');
+            $this->composerOutput[] = $rawOutput;
+            Application::setInstance($this->app);
+            return $output ?? '';
+        }
+
         $input = new ArrayInput(
             array_merge(
                 [
