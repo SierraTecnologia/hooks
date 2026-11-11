@@ -18,6 +18,7 @@
         }
     ],
     "require": {
+        "php": "^8.4",
         "composer/composer": "^2.10"
     },
     "require-dev": {
@@ -50,5 +51,5 @@
             "phpro/grumphp": true
         }
     },
-    "version": "2.3.0"
+    "version": "2.4.0"
 }
